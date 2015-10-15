@@ -1,19 +1,12 @@
 # coding=utf8
 
-try:
-    import json
-except ImportError:
-    import simplejson as json
+from six.moves import cStringIO as StringIO
 
-try:
-    from cStringIO import StringIO
-except ImportError:
-    from StringIO import StringIO
-
+import decimal
 import hashlib
+import json
 import subprocess
 import zipfile
-import decimal
 
 
 class Alignment:
