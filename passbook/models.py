@@ -1,4 +1,4 @@
-#:coding=utf8:
+# coding=utf8
 
 try:
     import json
@@ -11,12 +11,9 @@ except ImportError:
     from StringIO import StringIO
 
 import hashlib
+import subprocess
 import zipfile
 import decimal
-
-from M2Crypto import SMIME
-from M2Crypto import X509
-from M2Crypto.X509 import X509_Stack
 
 
 class Alignment:
@@ -328,26 +325,33 @@ class Pass(object):
         return json.dumps(self._hashes)
 
     # Creates a signature and saves it
-    def _createSignature(self, manifest, certificate, key,
+    def _createSignature(manifest, certificate, key,
                          wwdr_certificate, password):
-        def passwordCallback(*args, **kwds):
-            return password
-
-        smime = SMIME.SMIME()
-        # we need to attach wwdr cert as X509
-        wwdrcert = X509.load_cert(wwdr_certificate)
-        stack = X509_Stack()
-        stack.push(wwdrcert)
-        smime.set_x509_stack(stack)
-
-        # need to cast to string since load_key doesnt work with unicode paths
-        smime.load_key(str(key), certificate, callback=passwordCallback)
-        pk7 = smime.sign(SMIME.BIO.MemoryBuffer(manifest), flags=SMIME.PKCS7_DETACHED | SMIME.PKCS7_BINARY)
-
-        pem = SMIME.BIO.MemoryBuffer()
-        pk7.write(pem)
-        # convert pem to der
-        der = ''.join(l.strip() for l in pem.read().split('-----')[2].splitlines()).decode('base64')
+        openssl_cmd = [
+            'openssl',
+            'smime',
+            '-binary',
+            '-sign',
+            '-certfile',
+            wwdr_certificate,
+            '-signer',
+            certificate,
+            '-inkey',
+            key,
+            '-outform',
+            'DER',
+            '-passin',
+            'pass:{}'.format(password),
+        ]
+        process = subprocess.Popen(
+            openssl_cmd,
+            stdout=subprocess.PIPE,
+            stdin=subprocess.PIPE,
+        )
+        process.stdin.write(manifest)
+        der, error = process.communicate()
+        if error:
+            raise Exception(error)
 
         return der
 
