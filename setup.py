@@ -22,8 +22,8 @@ setup(
         'Development Status :: 3 - Alpha',
         'Environment :: Other Environment',
         'Intended Audience :: Developers',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 2 :: Only',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 3',
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
 )
