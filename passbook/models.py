@@ -315,7 +315,7 @@ class Pass(object):
         self._hashes['pass.json'] = hashlib.sha1(pass_json).hexdigest()
         for filename, filedata in self._files.items():
             self._hashes[filename] = hashlib.sha1(filedata).hexdigest()
-        return json.dumps(self._hashes)
+        return json.dumps(self._hashes).encode('utf-8')
 
     # Creates a signature and saves it
     def _createSignature(self, manifest, certificate, key,
