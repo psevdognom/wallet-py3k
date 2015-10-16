@@ -1,9 +1,8 @@
 # coding=utf8
 
-from six.moves import cStringIO as StringIO
-
 import decimal
 import hashlib
+from io import BytesIO
 import json
 import subprocess
 import zipfile
@@ -302,7 +301,7 @@ class Pass(object):
         manifest = self._createManifest(pass_json)
         signature = self._createSignature(manifest, certificate, key, wwdr_certificate, password)
         if not zip_file:
-            zip_file = StringIO()
+            zip_file = BytesIO()
         self._createZip(pass_json, manifest, signature, zip_file=zip_file)
         return zip_file
 
@@ -351,7 +350,7 @@ class Pass(object):
     # Creates .pkpass (zip archive)
     def _createZip(self, pass_json, manifest, signature, zip_file=None):
         zf = zipfile.ZipFile(zip_file or 'pass.pkpass', 'w')
-        zf.writestr('signature', signature.decode('utf-8'))
+        zf.writestr('signature', signature)
         zf.writestr('manifest.json', manifest)
         zf.writestr('pass.json', pass_json)
         for filename, filedata in self._files.items():
