@@ -307,7 +307,7 @@ class Pass(object):
         return zip_file
 
     def _createPassJson(self):
-        return json.dumps(self, default=PassHandler)
+        return json.dumps(self, default=PassHandler).encode('utf-8')
 
     # creates the hashes for the files and adds them into a json string.
     def _createManifest(self, pass_json):
