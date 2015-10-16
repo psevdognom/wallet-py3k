@@ -318,7 +318,7 @@ class Pass(object):
         return json.dumps(self._hashes)
 
     # Creates a signature and saves it
-    def _createSignature(manifest, certificate, key,
+    def _createSignature(self, manifest, certificate, key,
                          wwdr_certificate, password):
         openssl_cmd = [
             'openssl',
