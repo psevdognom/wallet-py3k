@@ -351,7 +351,7 @@ class Pass(object):
     # Creates .pkpass (zip archive)
     def _createZip(self, pass_json, manifest, signature, zip_file=None):
         zf = zipfile.ZipFile(zip_file or 'pass.pkpass', 'w')
-        zf.writestr('signature', signature)
+        zf.writestr('signature', signature.decode('utf-8'))
         zf.writestr('manifest.json', manifest)
         zf.writestr('pass.json', pass_json)
         for filename, filedata in self._files.items():
