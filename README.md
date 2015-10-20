@@ -7,7 +7,7 @@ Python library to read/write [Apple Waller](http://developer.apple.com/library/i
 This is a fork of https://github.com/devartis/passbook which doesn't support py3k.
 
 Getting Started
-==========================
+===============
 
 1. Get a Pass Type Id
 
@@ -23,7 +23,7 @@ openssl pkcs12 -in "Certificates.p12" -nocerts -out key.pem
 ```
 
 Typical Usage
-==========================
+=============
 
     #!/usr/bin/env python
 
@@ -40,6 +40,7 @@ Typical Usage
         passTypeIdentifier=passTypeIdentifier, \
         organizationName=organizationName, \
         teamIdentifier=teamIdentifier)
+
     passfile.serialNumber = '1234567'
     passfile.barcode = Barcode(message = 'Barcode message')
 
@@ -49,7 +50,7 @@ Typical Usage
     passfile.create('certificate.pem', 'key.pem', 'wwdr.pem', '123456', 'test.pkpass') # Create and output the Passbook file (.pkpass)
 
 Note: Getting WWDR Certificate
-==========================
+==============================
 
 Certificate is available @ http://developer.apple.com/certificationauthority/AppleWWDRCA.cer
 It can be exported from KeyChain into a .pem (e.g. wwdr.pem)
