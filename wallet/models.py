@@ -337,6 +337,7 @@ class Pass(object):
         ]
         process = subprocess.Popen(
             openssl_cmd,
+            stderr=subprocess.PIPE,
             stdout=subprocess.PIPE,
             stdin=subprocess.PIPE,
         )
