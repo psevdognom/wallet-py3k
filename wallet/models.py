@@ -343,7 +343,7 @@ class Pass(object):
         )
         process.stdin.write(manifest)
         der, error = process.communicate()
-        if error:
+        if process.returncode != 0:
             raise Exception(error)
 
         return der
