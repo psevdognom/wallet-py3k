@@ -28,7 +28,8 @@ This is a fork of https://github.com/devartis/passbook which doesn't support py3
        ```sh
        openssl pkcs12 -in "Certificates.p12" -clcerts -nokeys -out certificate.pem
        ```
-    3. Generate the key pem file -- **Note** you must set a password for the key pem file or you'll get errors when attempt to generate the pkpass file.
+    3. Generate the key pem file:<br/>**Note** *you must set a password for the key pem file or you'll get errors when attempt to generate the pkpass file.*
+
        ```sh
        openssl pkcs12 -in "Certificates.p12" -nocerts -out key.pem
        ```
