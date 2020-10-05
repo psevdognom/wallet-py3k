@@ -47,12 +47,12 @@ class NumberStyle:
 
 class Field(object):
 
-    def __init__(self, key, value, label=''):
+    def __init__(self, key, value, label='', changeMessage=''):
 
         self.key = key  # Required. The key must be unique within the scope
         self.value = value  # Required. Value of the field. For example, 42
         self.label = label  # Optional. Label text for the field.
-        self.changeMessage = ''  # Optional. Format string for the alert text that is displayed when the pass is updated
+        self.changeMessage = changeMessage  # Optional. Format string for the alert text that is displayed when the pass is updated
         self.textAlignment = Alignment.LEFT
 
     def json_dict(self):
@@ -155,14 +155,14 @@ class PassInformation(object):
         self.backFields = []
         self.auxiliaryFields = []
 
-    def addHeaderField(self, key, value, label):
-        self.headerFields.append(Field(key, value, label))
+    def addHeaderField(self, key, value, label, changeMessage):
+        self.headerFields.append(Field(key, value, label, changeMessage))
 
     def addPrimaryField(self, key, value, label):
         self.primaryFields.append(Field(key, value, label))
 
-    def addSecondaryField(self, key, value, label):
-        self.secondaryFields.append(Field(key, value, label))
+    def addSecondaryField(self, key, value, label, changeMessage):
+        self.secondaryFields.append(Field(key, value, label, changeMessage))
 
     def addBackField(self, key, value, label):
         self.backFields.append(Field(key, value, label))
